@@ -1,5 +1,9 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
+const Employee = require('./lib/Employee');
+const Manager = require('./lib/Manager');
+const Engineer = require('./lib/Engineer');
+const Intern = require('./lib/Intern');
 
 function addManager (){
     inquirer.prompt([
@@ -66,6 +70,15 @@ function addEmployee(){
             message: 'What is the employees school name?',
             name: 'school',
             when: (input) => input.role === "Intern",
+          },
+          {
+            type: 'list',
+            message: 'Would you like to add more employee?',
+            choices: [
+                "Yes",
+                "No"
+            ],
+            name: 'addEmployee',
           },
 
     ])
