@@ -1,16 +1,17 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
-const Employee = require('./lib/Employee');
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
+
+const teamMembers = [];
 
 function addManager (){
     inquirer.prompt([
         {
             type: 'input',
             message: 'What is the managers name?',
-            name: 'manager',
+            name: 'name',
           },
           {
             type: 'input',
@@ -29,7 +30,12 @@ function addManager (){
           },
           
     ])
-    .then ({manager , id, email, office})
+    .then (results => {
+       let {name , id , email, office} = results;
+       const manager = new Manager (name , id , email, office);
+       teamMembers.push(manager);
+       addEmployee();
+    });
 
 };
 
@@ -73,7 +79,7 @@ function addEmployee(){
           },
           {
             type: 'list',
-            message: 'Would you like to add more employee?',
+            message: 'Would you like to add more employees?',
             choices: [
                 "Yes",
                 "No"
@@ -82,4 +88,31 @@ function addEmployee(){
           },
 
     ])
+    .then( results => {
+
+        let { employee , id , email, role, github, school, addEmployee } = results;
+
+        if (role === "Engineer") {
+
+            const engineer = new Engineer ( employee , id, email, github);
+            teamMembers.push(engineer);
+        }
+        if (role === "Intern") {
+
+            const intern = new Intern ( employee , id, email, school);
+            teamMembers.push(intern);
+         }})
+
+    .then ( function () {     
+        if (addEmployee === "Yes"){
+            return addEmployee();
+        }
+    })
+
+    }
+
+function init(){
+    addManager();
 }
+
+init();
