@@ -84,13 +84,13 @@ function addEmployee(){
                 "Yes",
                 "No"
             ],
-            name: 'addEmployee',
+            name: 'newEmployee',
           },
 
     ])
     .then( results => {
 
-        let { employee , id , email, role, github, school, addEmployee } = results;
+        let { employee , id , email, role, github, school, newEmployee } = results;
 
         if (role === "Engineer") {
 
@@ -101,18 +101,12 @@ function addEmployee(){
 
             const intern = new Intern ( employee , id, email, school);
             teamMembers.push(intern);
-         }})
-
-    .then ( function () {     
-        if (addEmployee === "Yes"){
-            return addEmployee();
-        }
-    })
-
+         }
+         if (newEmployee === "Yes"){
+          return addEmployee();
+      }
+        })
     }
 
-function init(){
-    addManager();
-}
 
-init();
+addManager();
