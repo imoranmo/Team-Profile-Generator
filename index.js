@@ -3,11 +3,17 @@ const inquirer = require('inquirer');
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
+const InitHTML = require('./src/initHTML');
+const engineerHTML = require ('./src/engineerHTML');
+const internHTML = require ('./src/internHTML');
+const finalHTML = require ('./src/finalHTML');
+
 
 const teamMembers = [];
+const teamHTML = [];
 
-function addManager (){
-    inquirer.prompt([
+const addManager = () =>{
+    return inquirer.prompt([
         {
             type: 'input',
             message: 'What is the managers name?',
@@ -34,13 +40,15 @@ function addManager (){
        let {name , id , email, office} = results;
        const manager = new Manager (name , id , email, office);
        teamMembers.push(manager);
-       addEmployee();
+       const managerhtml = InitHTML(manager);
+       teamHTML.push(managerhtml);
+       console.log (managerhtml)
     });
 
 };
 
-function addEmployee(){
-    inquirer.prompt([
+const addEmployee = () =>{
+    return inquirer.prompt([
         {
             type: 'input',
             message: 'What is the employees name?',
@@ -95,18 +103,56 @@ function addEmployee(){
         if (role === "Engineer") {
 
             const engineer = new Engineer ( employee , id, email, github);
+            const engineerhtml = engineerHTML(engineer);
+            teamHTML.push(engineerhtml);
             teamMembers.push(engineer);
+            console.log (engineerhtml);
+            console.log (teamHTML)
         }
         if (role === "Intern") {
 
             const intern = new Intern ( employee , id, email, school);
+            const internhtml = internHTML(intern);
+            teamHTML.push(internhtml);
             teamMembers.push(intern);
          }
          if (newEmployee === "Yes"){
           return addEmployee();
       }
+
+      else {
+        
+        console.log(teamMembers);
+        console.log(typeof (teamMembers))
+
+      
+      }
         })
     }
 
+const init = () => {    
+addManager()
+.then (addEmployee)
+.then (() => {
+  const final = finalHTML();
+  teamHTML.push(final)
+})
+.then ((teamHTML)=> {
 
-addManager();
+  console.log(teamHTML)
+  const html = teamHTML.join();
+  fs.writeFile("./dist/team.html", html , err => {
+
+    if (err){
+      console.log(err);
+      return;
+    }
+    else {
+      console.log("Your Team page has been created!")
+    }
+  })
+
+})
+.catch( (err) => console.log(err))};
+
+init();
