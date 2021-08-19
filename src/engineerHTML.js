@@ -1,13 +1,9 @@
-const Engineer = require("../lib/Engineer");
-
 const engineerHTML = (results) => {
 
 const employee = results.getRole();
 const github = results.getGithub();
 
-if ( employee === 'Engineer'){
- 
-    let engineercode = `<div class="col">  
+return `<div class="col">  
 <div class="card mb-4 rounded-3 shadow-sm">
     <div class="card-header py-3 bg-dark bg-gradient">
         <h2 class="my-0 fw-normal text-white">${results.name}</h2> 
@@ -23,9 +19,8 @@ if ( employee === 'Engineer'){
         
     </div>
 </div>
-</div>`;
+</div>`
 
-return engineercode}
 }
 
 module.exports = engineerHTML

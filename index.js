@@ -42,7 +42,6 @@ const addManager = () =>{
        teamMembers.push(manager);
        const managerhtml = InitHTML(manager);
        teamHTML.push(managerhtml);
-       console.log (managerhtml)
     });
 
 };
@@ -106,26 +105,16 @@ const addEmployee = () =>{
             const engineerhtml = engineerHTML(engineer);
             teamHTML.push(engineerhtml);
             teamMembers.push(engineer);
-            console.log (engineerhtml);
-            console.log (teamHTML)
         }
         if (role === "Intern") {
-
+            console.log(role)
             const intern = new Intern ( employee , id, email, school);
-            const internhtml = internHTML(intern);
-            teamHTML.push(internhtml);
+            const interncode = internHTML(intern);
+            teamHTML.push(interncode);
             teamMembers.push(intern);
          }
          if (newEmployee === "Yes"){
           return addEmployee();
-      }
-
-      else {
-        
-        console.log(teamMembers);
-        console.log(typeof (teamMembers))
-
-      
       }
         })
     }
@@ -136,11 +125,10 @@ addManager()
 .then (() => {
   const final = finalHTML();
   teamHTML.push(final)
+  console.log(teamHTML.join(''))
 })
-.then ((teamHTML)=> {
-
-  console.log(teamHTML)
-  const html = teamHTML.join();
+.then (()=> {
+  const html = teamHTML.join('');
   fs.writeFile("./dist/team.html", html , err => {
 
     if (err){

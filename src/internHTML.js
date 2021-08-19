@@ -1,9 +1,7 @@
 const internHTML = (results) => {
 
-    const employee = results.getRole();
     const school = results.getSchool();
 
-    if (employee === 'Intern'){
 return `  <div class="col">  
 <div class="card mb-4 rounded-3 shadow-sm">
     <div class="card-header py-3 bg-dark bg-gradient">
@@ -20,7 +18,7 @@ return `  <div class="col">
         
     </div>
 </div>
-</div> `}
+</div> `
 }
 
 module.exports = internHTML
